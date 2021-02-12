@@ -67,7 +67,7 @@
 
     $(function() {
       $('.menu__list li').hover(function() {
-        $(this).children('.menu__list__childList').stop(true).slideDown();
+        $(this).children('p').next().stop(true).slideDown();
       }, function() {
         $(this).children('.menu__list__childList').stop(true).slideUp();
       });
