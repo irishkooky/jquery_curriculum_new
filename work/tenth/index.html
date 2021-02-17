@@ -30,7 +30,7 @@
     <script>
       $(function() {
         var page = null;
-        var word = null;
+        var word = '';
         $('[data-js="search-btn"]').on('click', function() {
           page = 1;
           word = $('[data-js="search-word"]').val();
@@ -130,22 +130,22 @@
         }
 
         function errorMessage(error) {
-          var errorMessage = null;
-            switch (error.status) {
-              case 400:
-                errorMessage = '検索文字が入力されていません。';
-                break;
-              case 429:
-                errorMessage = 'リクエスト過多です。しばらく時間を置いてからお試しください。';
-                break;
-              case 0:
-                errorMessage = '通信に失敗しました。インターネットの接続をご確認ください。';
-                break;
-              default:
-                errorMessage = '予期せぬエラーが発生しました。';
-                break;
-            }
-            var message = '<p class="error-message">' + errorMessage + '</p>';
+          var errorMessage = '';
+          switch (error.status) {
+            case 400:
+              errorMessage = '検索文字が入力されていません。';
+              break;
+            case 429:
+              errorMessage = 'リクエスト過多です。しばらく時間を置いてからお試しください。';
+              break;
+            case 0:
+              errorMessage = '通信に失敗しました。インターネットの接続をご確認ください。';
+              break;
+            default:
+              errorMessage = '予期せぬエラーが発生しました。';
+              break;
+          }
+          var message = '<p class="error-message">' + errorMessage + '</p>';
           $('.message').append(message);
         }
       });
