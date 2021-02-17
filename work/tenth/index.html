@@ -44,7 +44,7 @@
             return false;
           }
           clearList();
-          page ++;
+          page++;
           getBookData();
         });
 
@@ -54,7 +54,7 @@
             return false;
           }
           clearList();
-          page --;
+          page--;
           getBookData();
         });
 
@@ -86,22 +86,7 @@
               showPager(data);
             }
           }).fail(function(error) {
-            var message = '';
-            switch (error.status) {
-              case 400:
-                message = '検索文字が入力されていません。';
-                break;
-              case 429:
-                message = 'リクエスト過多です。しばらく時間を置いてからお試しください。';
-                break;
-              case 0:
-                message = '通信に失敗しました。インターネットの接続をご確認ください。';
-                break;
-              default:
-                message = '予期せぬエラーが発生しました。';
-                break;
-            }
-            $('.message').append(message);
+            errorMessage(error);
           });
         }
 
@@ -111,7 +96,7 @@
             lists +=
               '<li class="lists__item">' +
                 '<div class="lists__item__inner">' +
-                  '<a href="" class="lists__item__link" target="_blank">' +
+                  '<a href="' + book.Item.itemUrl + '" class="lists__item__link" target="_blank">' +
                     '<img src="' + book.Item.largeImageUrl + '" class="lists__item__img" alt="">' +
                     '<p class="lists__item__detail">作品名：' + book.Item.title + '</p>' +
                     '<p class="lists__item__detail">作者　：' + book.Item.author + '</p>' +
@@ -119,8 +104,8 @@
                   '</a>' +
                 '</div>' +
               '</li>';
-            })
-            $('.lists').append(lists);
+          })
+          $('.lists').append(lists);
         }
 
         function showPager(data) {
@@ -142,6 +127,26 @@
           if (data.page === data.pageCount) {
             $('[data-js="page-next"]').addClass('disabled');
           }
+        }
+
+        function errorMessage(error) {
+          var errorMessage = null;
+            switch (error.status) {
+              case 400:
+                errorMessage = '検索文字が入力されていません。';
+                break;
+              case 429:
+                errorMessage = 'リクエスト過多です。しばらく時間を置いてからお試しください。';
+                break;
+              case 0:
+                errorMessage = '通信に失敗しました。インターネットの接続をご確認ください。';
+                break;
+              default:
+                errorMessage = '予期せぬエラーが発生しました。';
+                break;
+            }
+            var message = '<p class="error-message">' + errorMessage + '</p>';
+          $('.message').append(message);
         }
       });
       // 楽天ブックスの総合検索APIを使って製作してください。
